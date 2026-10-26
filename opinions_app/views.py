@@ -1,4 +1,5 @@
-# opinions_app/views.py
+"""View-функции приложения «Что посмотреть?»."""
+
 from random import randrange
 
 from flask import abort, flash, redirect, render_template, url_for
@@ -8,6 +9,7 @@ from .models import Opinion, db
 
 
 def index_view():
+    """Показать случайное мнение о фильме."""
     quantity = Opinion.query.count()
     if not quantity:
         abort(500)
@@ -17,6 +19,7 @@ def index_view():
 
 
 def add_opinion_view():
+    """Добавить новое мнение о фильме."""
     form = OpinionForm()
     if form.validate_on_submit():
         text = form.text.data
@@ -35,5 +38,6 @@ def add_opinion_view():
 
 
 def opinion_view(id):
+    """Показать мнение о фильме по его id."""
     opinion = Opinion.query.get_or_404(id)
     return render_template('opinion.html', opinion=opinion)

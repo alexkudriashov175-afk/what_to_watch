@@ -1,4 +1,5 @@
-# opinions_app/cli_commands.py
+"""CLI-команды приложения «Что посмотреть?»."""
+
 import csv
 
 import click

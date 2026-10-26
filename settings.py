@@ -1,8 +1,11 @@
-# what_to_watch/settings.py
+"""Настройки приложения «Что посмотреть?»."""
+
 import os
 
 
 class Config(object):
+    """Конфигурация Flask-приложения."""
+
     SQLALCHEMY_DATABASE_URI = os.getenv(
         'DATABASE_URI', default='sqlite:///db.sqlite3'
     )

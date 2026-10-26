@@ -1,10 +1,13 @@
-# opinions_app/forms.py
+"""Формы приложения «Что посмотреть?»."""
+
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, URLField
 from wtforms.validators import DataRequired, Length, Optional
 
 
 class OpinionForm(FlaskForm):
+    """Форма добавления мнения о фильме."""
+
     title = StringField(
         'Введите название фильма',
         validators=[

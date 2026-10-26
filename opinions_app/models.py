@@ -1,4 +1,5 @@
-# opinions_app/models.py
+"""Модели приложения «Что посмотреть?»."""
+
 from datetime import datetime
 
 from flask_sqlalchemy import SQLAlchemy
@@ -7,6 +8,8 @@ db = SQLAlchemy()
 
 
 class Opinion(db.Model):
+    """Модель мнения о фильме."""
+
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(128), nullable=False)
     text = db.Column(db.Text, unique=True, nullable=False)
