@@ -1,4 +1,5 @@
-# opinions_app/__init__.py
+"""Пакет приложения «Что посмотреть?»."""
+
 from flask import Flask
 from flask_migrate import Migrate
 
@@ -17,9 +18,12 @@ migrate = Migrate(app, db)
 # views/error_handlers/cli_commands зависят от db и app,
 # созданных выше. Импортируем их после инициализации,
 # чтобы избежать циклических зависимостей.
-from . import views                                            # noqa: E402,F401
-from .cli_commands import load_opinions_command                # noqa: E402
-from .error_handlers import internal_error, page_not_found     # noqa: E402
+from . import views  # noqa: E402,F401
+from .cli_commands import load_opinions_command  # noqa: E402
+from .error_handlers import (  # noqa: E402
+    internal_error,
+    page_not_found,
+)
 
 
 # Регистрация view-функций
