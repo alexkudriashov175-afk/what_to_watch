@@ -1,4 +1,4 @@
-# what_to_watch/opinions_app.py
+"""Приложение what_to_watch для публикации и просмотра мнений о фильмах."""
 
 import csv
 from datetime import datetime
@@ -23,6 +23,8 @@ migrate = Migrate(app, db)
 
 
 class Opinion(db.Model):
+    """Модель мнения о фильме."""
+
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(128), nullable=False)
     text = db.Column(db.Text, unique=True, nullable=False)
@@ -32,6 +34,8 @@ class Opinion(db.Model):
 
 
 class OpinionForm(FlaskForm):
+    """Форма для добавления нового мнения о фильме."""
+
     title = StringField(
         'Введите название фильма',
         validators=[DataRequired(message='Обязательное поле'),
@@ -50,6 +54,7 @@ class OpinionForm(FlaskForm):
 
 @app.route('/')
 def index_view():
+    """Показать случайное мнение о фильме."""
     quantity = Opinion.query.count()
     if not quantity:
         abort(500)
@@ -60,6 +65,7 @@ def index_view():
 
 @app.route('/add', methods=['GET', 'POST'])
 def add_opinion_view():
+    """Обработать форму добавления нового мнения о фильме."""
     form = OpinionForm()
     if form.validate_on_submit():
         text = form.text.data
@@ -79,24 +85,27 @@ def add_opinion_view():
 
 @app.route('/opinion/<int:id>')
 def opinion_view(id):
+    """Показать мнение о фильме по его идентификатору."""
     opinion = Opinion.query.get_or_404(id)
     return render_template('opinion.html', opinion=opinion)
 
 
 @app.errorhandler(404)
 def page_not_found(error):
+    """Обработать ошибку 404 (страница не найдена)."""
     return render_template('404.html'), 404
 
 
 @app.errorhandler(500)
 def internal_error(error):
+    """Обработать ошибку 500 (внутренняя ошибка сервера)."""
     db.session.rollback()
     return render_template('500.html'), 500
 
 
 @app.cli.command('load_opinions')
 def load_opinions_command():
-    """Функция загрузки мнений в базу данных."""
+    """Загрузить мнения из CSV-файла в базу данных."""
     with open('opinions.csv', encoding='utf-8') as f:
         reader = csv.DictReader(f)
         counter = 0
