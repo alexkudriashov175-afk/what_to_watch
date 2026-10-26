@@ -38,7 +38,7 @@ class OpinionForm(FlaskForm):
                     Length(1, 128)]
     )
     text = TextAreaField(
-        'Напишите мнение', 
+        'Напишите мнение',
         validators=[DataRequired(message='Обязательное поле')]
     )
     source = URLField(
@@ -67,8 +67,8 @@ def add_opinion_view():
             flash('Такое мнение уже было оставлено ранее!')
             return render_template('add_opinion.html', form=form)
         opinion = Opinion(
-            title=form.title.data, 
-            text=text, 
+            title=form.title.data,
+            text=text,
             source=form.source.data
         )
         db.session.add(opinion)
